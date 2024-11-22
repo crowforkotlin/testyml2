@@ -11,14 +11,15 @@ jobs:
   push-to-another-repository:
     runs-on: ubuntu-latest
     steps:
+      - name: Create directory and file
+        run: |
+          mkdir -p new_directory
+          echo "Hello, world!" > new_directory/1.txt
       - name: Print working directory and list files 
         run: |
           pwd 
-          
-      - name: Print working directory and list files 2
-        run: |
-          ls
-          
+          ls -la
+        
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Pushes to another repository
         id: push_directory
@@ -26,7 +27,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT_TOKEN }}
         with:
-          source-directory: 2.txt
+          source-directory: new_directory
           destination-github-username: 'crowforkotlin'
           destination-repository-name: 'testyml1'
           user-email: crowforkotlin@gmail.com
