@@ -30,7 +30,8 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git remote add target https://github.com/crowforkotlin/testyml1.git
-          git push origin dev
+          git checkout -b dev || git checkout dev 
+          git push target dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
