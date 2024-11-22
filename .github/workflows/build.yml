@@ -14,8 +14,11 @@ jobs:
       - name: Print working directory and list files 
         run: |
           pwd 
-          ls -la
-        
+          
+      - name: Print working directory and list files 2
+        run: |
+          ls
+          
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Pushes to another repository
         id: push_directory
@@ -23,7 +26,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.PAT_TOKEN }}
         with:
-          source-directory: .
+          source-directory: 2.txt
           destination-github-username: 'crowforkotlin'
           destination-repository-name: 'testyml1'
           user-email: crowforkotlin@gmail.com
