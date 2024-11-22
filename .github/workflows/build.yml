@@ -5,6 +5,9 @@ on:
       - main
 jobs:
   web-build:
+    permissions:
+      contents: read
+      pages: write          # <-- Add this line
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
