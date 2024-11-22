@@ -30,4 +30,4 @@ jobs:
           git config --global user.email 'github-actions@github.com'
           git add -A
           git commit -m "updates..."
-          git push target dev
+          git push origin dev -f
