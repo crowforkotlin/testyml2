@@ -6,9 +6,8 @@ on:
 jobs:
   web-build:
     permissions:
-      contents: read
+      contents: write
       pages: write          # <-- Add this line
-      
       pull-requests: write  # To create a PR from that branch
     runs-on: ubuntu-latest
     timeout-minutes: 45
