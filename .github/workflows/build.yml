@@ -1,0 +1,20 @@
+name: Build & Ship
+on:
+  push:
+    branches:
+      - main
+jobs:
+  web-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Push to public repo
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git remote add target https://github.com/crowforkotlin/testyml1.git
+          git push target main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
