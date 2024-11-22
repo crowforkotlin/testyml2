@@ -11,23 +11,23 @@ jobs:
   push-to-another-repository:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the origin
-        uses: actions/checkout@v4
+      - name: Print working directory and list files 
+        run: |
+          pwd 
+          ls -la
+        
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@target-branch
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAT_TOKEN }}
         with:
-          fetch-depth: 0
-      - name: Setup ssh for git command
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.PAT_TOKEN }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
-      - name: Setup target remote
-        run: |
-          git remote add target "https://github.com/crowforkotlin/testyml1.git"
-      - name: Creates commit and push
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add -A
-          git commit -m "updates..."
-          git push origin dev -f
+          source-directory: .
+          destination-github-username: 'crowforkotlin'
+          destination-repository-name: 'testyml1'
+          user-email: crowforkotlin@gmail.com
+          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
+          target-branch: main
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
