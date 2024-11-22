@@ -26,7 +26,6 @@ jobs:
           git remote add target "https://github.com/crowforkotlin/testyml1.git"
       - name: Creates commit and push
         run: |
-          ...your code and commit creation
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add -A
