@@ -8,30 +8,27 @@ permissions:
   pages: write          # <-- Add this line
   pull-requests: write  # To create a PR from that branch
 jobs:
-  web-build:
+  push-to-another-repository:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+      - name: Checkout the origin
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "💡 The ${{ secrets.PAT_TOKEN }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+        with:
+          fetch-depth: 0
+      - name: Setup ssh for git command
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: Push to public repo
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PAT_TOKEN }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
+      - name: Setup target remote
         run: |
+          git remote add target "https://github.com/crowforkotlin/testyml1.git"
+      - name: Creates commit and push
+        run: |
+          ...your code and commit creation
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git remote add target https://github.com/crowforkotlin/testyml1.git
-          git checkout -b dev || git checkout dev 
+          git add -A
+          git commit -m "updates..."
           git push target dev
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
