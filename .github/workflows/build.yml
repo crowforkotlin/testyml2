@@ -35,4 +35,3 @@ jobs:
           git push target dev
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-
