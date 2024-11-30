@@ -30,7 +30,8 @@ jobs:
           curl -o conveyor-15.1-mac-aarch64.zip https://downloads.hydraulic.dev/conveyor/conveyor-15.1-mac-aarch64.zip
           unzip conveyor-15.1-mac-aarch64.zip
           open Conveyor.app
-          ls ~/Applications
+          echo "file $(ls ~/)"
+          ls /
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: PRINT
