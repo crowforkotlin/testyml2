@@ -31,6 +31,7 @@ jobs:
           unzip conveyor-15.1-mac-aarch64.zip
           echo "file ---> $(ls Conveyor.app)"
           echo "fissss -> $(ls -R Conveyor.app)"
+          Conveyor.app/Contents/runtime/Contents/MacOS conveyor run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: PRINT
