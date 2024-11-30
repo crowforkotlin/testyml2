@@ -29,8 +29,6 @@ jobs:
         run: |
           curl -o conveyor-15.1-mac-aarch64.zip https://downloads.hydraulic.dev/conveyor/conveyor-15.1-mac-aarch64.zip
           unzip conveyor-15.1-mac-aarch64.zip
-          echo "file ---> $(ls Conveyor.app)"
-          echo "fissss -> $(ls -R Conveyor.app)"
           echo "xxxxxxxx -> $(ls -R  Conveyor.app/Contents/runtime/Contents)"
           Conveyor.app/Contents/runtime/Contents/MacOS/Conveyor run
         env:
