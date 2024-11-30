@@ -9,29 +9,28 @@ permissions:
   pull-requests: write  # To create a PR from that branch
 jobs:
   push-to-another-repository:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
-      - name: Create directory and file
+      - uses: actions/checkout@v4  # Use checkout to support cloning local projects to runner environment
+      # - name: Setup JBR 17
+      #   uses: gmitch215/setup-java@main
+      #   with:
+      #     distribution: 'jetbrains'
+      #     java-version: 17
+      #     cache: 'gradle'
+      #     cache-dependency-path: | # regex to match all sub-projects
+      #     **/*.gradle*
+      #     **/gradle-wrapper.properties
+      #     package-type: 'jdk+jcef'
+      #   # For GitHub API (use if you believe you'd run into rate limits)
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download Conveyor
         run: |
-          mkdir -p new_directory
-          echo "Hello, world!" > new_directory/2.txt
-      - name: Print working directory and list files 
-        run: |
-          pwd 
-          ls -la
-        
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@target-branch
+          curl -o conveyor-15.1-mac-aarch64.zip https://downloads.hydraulic.dev/conveyor/conveyor-15.1-mac-aarch64.zip
+          unzip conveyor-15.1-mac-aarch64.zip
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          source-directory: new_directory
-          destination-github-username: 'crowforkotlin'
-          destination-repository-name: 'testyml1'
-          user-email: crowforkotlin@gmail.com
-          commit-message: See ORIGIN_COMMIT from $GITHUB_REF
-          target-branch: main
-      - name: Test get variable exported by push-to-another-repository
-        run: echo $DESTINATION_CLONED_DIRECTORY
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: PRINT
+        run: |
+          ls -A
